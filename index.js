@@ -39,6 +39,9 @@ const KEY_MAP = {
   D: "d",
   ArrowRight: "d",
 
+  l: "l",
+  L: "l",
+
   Enter: "Enter",
 };
 
@@ -61,10 +64,12 @@ const castleImage = new Image();
 const rubyImage = new Image();
 const startBgImage = new Image();
 const endBgImage = new Image();
+const legolas = new Image();
 
 window.onload = () => {
   async function renderImages() {
     await loadImage(playerImage, "./images/player.png");
+    await loadImage(legolas, "./images/legolas.png");
     await loadImage(enemyImage, "./images/enemy.png");
     await loadImage(arrowImage, "./images/arrow.png");
     await loadImage(castleImage, "./images/castle.png");
@@ -335,6 +340,12 @@ class Player extends Sprite {
 //   };
 // }
 
+class Legolas extends Player {
+  constructor() {
+    super(CANVAS_WIDTH / 2 - 25, CANVAS_HEIGHT / 2 + 100, 100, 30, legolas);
+  }
+}
+
 class Arrow extends Sprite {
   constructor(x, y) {
     super(x, y, 80, 5, arrowImage);
@@ -535,6 +546,7 @@ class ActiveGameState {
   castle;
   background;
   ruby;
+  legolas;
 
   constructor(gameData) {
     this.gameData = gameData;
@@ -554,6 +566,10 @@ class ActiveGameState {
 
     if (nextInput.type === EVENT_TYPES.KEYBOARD_EVENT) {
       //
+
+      if (nextInput.key === KEY_MAP.l) {
+        this.player.image = legolas;
+      }
       if (nextInput.key === KEY_MAP.a && !this.player.atLeftWall()) {
         this.player.move(-PLAYER_MOVEMENT_SPEED, 0);
       }
