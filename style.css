@@ -1,0 +1,96 @@
+#main-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#backdrop {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("./images/backdrop.jpeg");
+  filter: brightness(0.5) blur(3px);
+
+  z-index: -1;
+}
+
+#gameover-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  height: 500px;
+  background-color: #3c2616;
+}
+
+#title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 50%;
+  width: 100%;
+}
+
+/* #leaderboard-container {
+} */
+
+#input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  width: 100%;
+}
+
+.gameover-text {
+  font-size: 50px;
+}
+.score-text {
+  font-size: 30px;
+}
+
+.formContainer {
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  outline: none;
+}
+
+.inputContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  font-family: Overpass Mono;
+  background-color: transparent;
+  width: calc(70vw - 300px);
+  border: none;
+  height: 40px;
+  outline: none;
+}
+
+.searchButton {
+  font-family: Poppins;
+  position: relative;
+  color: white;
+  background-color: #c9a26a;
+  width: 100px;
+  cursor: pointer;
+}
+
+.lowerHeaderMenu.a {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+}
