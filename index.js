@@ -59,6 +59,8 @@ const arrowImage = new Image();
 const bgImage = new Image();
 const castleImage = new Image();
 const rubyImage = new Image();
+const startBgImage = new Image();
+const endBgImage = new Image();
 
 window.onload = () => {
   async function renderImages() {
@@ -68,6 +70,9 @@ window.onload = () => {
     await loadImage(castleImage, "./images/castle.png");
     await loadImage(bgImage, "./images/bg.png");
     await loadImage(rubyImage, "./images/ruby.png");
+    await loadImage(startBgImage, "./images/new-start.png");
+    await loadImage(startBgImage, "./images/new-start.png");
+    await loadImage(endBgImage, "./images/end-bg.png");
   }
   renderImages();
 };
@@ -142,7 +147,7 @@ const gameOverScore = (text, fontSize) => {
   ctx.font = `${fontSize}px ${FONT}`;
   ctx.textAlign = "left";
   ctx.textBaseLine = "center";
-  ctx.fillText(text, centerX, centerY + 50);
+  ctx.fillText(text, centerX, centerY);
 };
 
 const playAgain = (text, fontSize) => {
@@ -156,6 +161,19 @@ const playAgain = (text, fontSize) => {
   ctx.textAlign = "left";
   ctx.textBaseLine = "center";
   ctx.fillText(text, centerX, 400);
+};
+
+const play = (text, fontSize) => {
+  const textWidth = getCenteredTextDimensions(text, fontSize)[0];
+  const textHeight = getCenteredTextDimensions(text, fontSize)[1];
+  const centerX = CANVAS_WIDTH / 2 - textWidth / 2;
+  const centerY = CANVAS_HEIGHT / 2 - textHeight / 2;
+
+  ctx.fillStyle = "white";
+  ctx.font = `${fontSize}px ${FONT}`;
+  ctx.textAlign = "left";
+  ctx.textBaseLine = "center";
+  ctx.fillText(text, centerX, 290);
 };
 
 // ===
@@ -245,6 +263,17 @@ class Ruby extends Sprite {
 class Background extends Sprite {
   constructor() {
     super(0, 0, 500, 800, bgImage);
+  }
+}
+
+class StartBackground extends Sprite {
+  constructor() {
+    super(0, 0, 500, 800, startBgImage);
+  }
+}
+class EndBackground extends Sprite {
+  constructor() {
+    super(0, 0, 500, 800, endBgImage);
   }
 }
 
@@ -475,6 +504,7 @@ class StartState {
 
   constructor(gameData) {
     this.gameData = gameData;
+    this.startBgImage = new StartBackground();
   }
   handleInput = () => {
     const nextInput = this.gameData.inputQueue[0];
@@ -491,8 +521,8 @@ class StartState {
   update = () => {};
 
   draw = () => {
-    gameOverText("The Brown Knight", 50);
-    playAgain("[ ENTER ] to Start", 20);
+    this.startBgImage.draw();
+    play("[ Press ENTER to Play ]", 20);
   };
 }
 
@@ -575,6 +605,8 @@ class EndGameState {
 
   constructor(gameData) {
     this.gameData = gameData;
+    this.startBgImage = new StartBackground();
+    this.endBgImage = new EndBackground();
   }
   handleInput = () => {
     const nextInput = this.gameData.inputQueue[0];
@@ -595,9 +627,10 @@ class EndGameState {
   update = () => {};
 
   draw = () => {
+    this.endBgImage.draw();
     gameOverText("GAME OVER", 30);
-    gameOverScore(`Score: ${score.getScore()}`, 20);
-    playAgain(`[ ENTER ] to Try Again`, 20);
+    play(`Score: ${score.getScore()}`, 20);
+    playAgain(`[ Press ENTER to Play Again ]`, 20);
   };
 }
 // ================================================== run game
